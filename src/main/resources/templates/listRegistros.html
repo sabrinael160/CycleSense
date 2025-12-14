@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registros de Dolor</title>
+</head>
+<body>
+
+<h1>Registros de Dolor</h1>
+
+<a th:href="@{/registros/nuevo}">Nuevo registro</a>
+
+<table border="1">
+    <tr>
+        <th>Intensidad</th>
+        <th>Zona</th>
+        <th>Síntomas</th>
+        <th>Acciones</th>
+    </tr>
+
+    <tr th:each="r : ${registros}">
+        <td th:text="${r.intensidad}"></td>
+        <td th:text="${r.zona}"></td>
+        <td th:text="${r.sintomas}"></td>
+        <td>
+            <a th:href="@{/registros/editar/{id}(id=${r.id})}">Editar</a>
+            <a th:href="@{/registros/borrar/{id}(id=${r.id})}">Borrar</a>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

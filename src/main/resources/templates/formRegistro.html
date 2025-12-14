@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Dolor</title>
+    <link rel="stylesheet" th:href="@{/registro.css}">
+</head>
+<body>
+<h1>Formulario de Registro</h1>
+
+<form th:action="@{/registros/guardar}" th:object="${registro}" method="post">
+    <label>Intensidad</label>
+<input type="number" th:field="*{intensidad}" />
+
+<label>Zona</label>
+<input type="text" th:field="*{zona}" />
+
+<label>Síntomas</label>
+<input type="text" th:field="*{sintomas}" />
+
+
+    <button type="submit">Guardar</button>
+</form>
+
+<a th:href="@{/registros}">Volver a la lista</a>
+</body>
+</html>
