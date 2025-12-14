@@ -1,0 +1,7 @@
+/target
+/__MACOSX
+/database.mv.db
+/.vscode
+/.idea
+*.iml
+.DS_Store
