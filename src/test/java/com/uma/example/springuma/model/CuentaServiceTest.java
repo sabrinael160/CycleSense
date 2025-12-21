@@ -64,17 +64,25 @@ class CuentaServiceTest {
     @Test
     @DisplayName("updateCuenta actualiza correctamente los campos")
     void updateCuenta_actualiza() {
-        Cuenta original = new Cuenta(1L, 100.0, "CCC1");
-        Cuenta cambios = new Cuenta(1L, 200.0, "CCC2");
-
+        Cuenta original = new Cuenta();
+        original.setId(1L);
+        original.setBalance(100.0);
+        original.setCcc(1111);  // ✔️ ahora es int
+    
+        Cuenta cambios = new Cuenta();
+        cambios.setId(1L);
+        cambios.setBalance(200.0);
+        cambios.setCcc(2222);  // ✔️ ahora es int
+    
         when(repositoryCuenta.getReferenceById(1L)).thenReturn(original);
-
+    
         cuentaService.updateCuenta(cambios);
-
+    
         assertEquals(200.0, original.getBalance());
-        assertEquals("CCC2", original.getCcc());
+        assertEquals(2222, original.getCcc());
         verify(repositoryCuenta, times(1)).saveAndFlush(original);
     }
+
 
     @Test
     @DisplayName("removeCuenta elimina la cuenta")
