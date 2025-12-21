@@ -1,6 +1,5 @@
 package com.uma.example.springuma.model;
-
-import com.uma.example.springuma.repository.RepositoryCuenta;
+import com.uma.example.springuma.model.RepositoryCuenta;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
