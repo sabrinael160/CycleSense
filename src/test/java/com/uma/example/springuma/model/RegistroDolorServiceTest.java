@@ -1,6 +1,6 @@
 package com.uma.example.springuma.model;
 
-import com.uma.example.springuma.repository.RegistroDolorRepository;
+import com.uma.example.springuma.model.RegistroDolorRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
