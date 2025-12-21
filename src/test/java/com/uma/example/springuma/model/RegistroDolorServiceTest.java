@@ -1,6 +1,5 @@
 package com.uma.example.springuma.model;
 
-import com.uma.example.springuma.model.RegistroDolorRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -16,60 +15,65 @@ import static org.mockito.Mockito.*;
 class RegistroDolorServiceTest {
 
     @Mock
-    private RegistroDolorRepository registroDolorRepository;
+    private RegistroDolorRepository repository;
 
     @InjectMocks
-    private RegistroDolorService registroDolorService;
+    private RegistroDolorService service;
 
     public RegistroDolorServiceTest() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    @DisplayName("guardar debe llamar al repositorio y devolver el registro")
-    void guardar_devuelveRegistro() {
-        RegistroDolor registro = new RegistroDolor(1L, 5, "Cabeza", "2025-12-21");
-        when(registroDolorRepository.save(registro)).thenReturn(registro);
+    @DisplayName("findAll devuelve todos los registros")
+    void findAll_devuelveLista() {
+        RegistroDolor r1 = new RegistroDolor();
+        RegistroDolor r2 = new RegistroDolor();
 
-        RegistroDolor resultado = registroDolorService.guardar(registro);
+        when(repository.findAll()).thenReturn(Arrays.asList(r1, r2));
 
-        assertEquals(registro, resultado);
-        verify(registroDolorRepository, times(1)).save(registro);
+        var resultado = service.findAll();
+
+        assertEquals(2, resultado.size());
+        verify(repository, times(1)).findAll();
     }
 
     @Test
-    @DisplayName("buscarPorId devuelve el registro si existe")
-    void buscarPorId_devuelveRegistro() {
-        RegistroDolor registro = new RegistroDolor(1L, 5, "Cabeza", "2025-12-21");
-        when(registroDolorRepository.findById(1L)).thenReturn(Optional.of(registro));
+    @DisplayName("findById devuelve el registro si existe")
+    void findById_devuelveRegistro() {
+        RegistroDolor r = new RegistroDolor();
+        when(repository.findById(1L)).thenReturn(Optional.of(r));
 
-        RegistroDolor resultado = registroDolorService.buscarPorId(1L);
+        RegistroDolor resultado = service.findById(1L);
 
-        assertNotNull(resultado);
-        assertEquals(registro, resultado);
+        assertEquals(r, resultado);
     }
 
     @Test
-    @DisplayName("buscarPorId devuelve null si no existe")
-    void buscarPorId_noExiste() {
-        when(registroDolorRepository.findById(1L)).thenReturn(Optional.empty());
+    @DisplayName("findById devuelve null si no existe")
+    void findById_noExiste() {
+        when(repository.findById(1L)).thenReturn(Optional.empty());
 
-        RegistroDolor resultado = registroDolorService.buscarPorId(1L);
+        RegistroDolor resultado = service.findById(1L);
 
         assertNull(resultado);
     }
 
     @Test
-    @DisplayName("listar devuelve todos los registros")
-    void listar_devuelveLista() {
-        RegistroDolor r1 = new RegistroDolor(1L, 5, "Cabeza", "2025-12-21");
-        RegistroDolor r2 = new RegistroDolor(2L, 3, "Espalda", "2025-12-20");
-        when(registroDolorRepository.findAll()).thenReturn(Arrays.asList(r1, r2));
+    @DisplayName("save guarda el registro")
+    void save_guardaRegistro() {
+        RegistroDolor r = new RegistroDolor();
 
-        var resultado = registroDolorService.listar();
+        service.save(r);
 
-        assertEquals(2, resultado.size());
-        verify(registroDolorRepository, times(1)).findAll();
+        verify(repository, times(1)).save(r);
+    }
+
+    @Test
+    @DisplayName("deleteById elimina por ID")
+    void deleteById_elimina() {
+        service.deleteById(1L);
+
+        verify(repository, times(1)).deleteById(1L);
     }
 }
-
